@@ -38,13 +38,14 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
         RealmResults<Recipe> recipes = realmQuery.findAll();
         recipeList= new ArrayList<>();
         recipeList.addAll(recipes.subList(0, recipes.size()));
+        Log.v("Harry", recipeList.get(2).getName());
 
     }
 
     @Override
     public void onDataSetChanged() {
         position++;
-        Log.v("Harry", "$position");
+        Log.v("Harry", ""+position);
         recipe = recipeList.get(position);
 
         if(position == limit) {
@@ -59,6 +60,7 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getCount() {
+        Log.v("Harry_", ""+recipe.getIngredients().size());
         return recipe.getIngredients().size();
     }
 
@@ -66,6 +68,7 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     public RemoteViews getViewAt(int position) {
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(),
                 R.layout.list_view_item );
+        Log.v("Harry__", recipe.getName());
         if(position == 0){
             remoteViews.setTextViewText(R.id.list_title,
                     "Recipe name:  ");

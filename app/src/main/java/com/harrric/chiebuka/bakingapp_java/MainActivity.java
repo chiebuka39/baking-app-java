@@ -27,12 +27,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        if(findViewById(R.id.container) != null){
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new RecipeListFragment())
-                    .commit();
+        if(savedInstanceState == null){
+            if(findViewById(R.id.container) != null){
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new RecipeListFragment())
+                        .commit();
+            }
         }
+
+
 
 
     }
@@ -46,7 +49,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Subscribe

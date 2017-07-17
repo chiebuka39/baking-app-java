@@ -40,7 +40,7 @@ public class BakingWidget extends AppWidgetProvider {
         remoteViews.setOnClickPendingIntent(R.id.next, getPendingSelfIntent(context,WIDGET_IM_NEXT));
 
         // Instruct the widget manager to update the widget
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.layout.list_view_item);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.ingredients);
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
     }
 

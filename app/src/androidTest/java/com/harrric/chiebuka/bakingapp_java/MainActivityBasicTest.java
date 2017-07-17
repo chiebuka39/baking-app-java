@@ -4,11 +4,17 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.FragmentTransaction;
 
+import com.harrric.chiebuka.bakingapp_java.fragments.RecipeDetailFragment;
 import com.harrric.chiebuka.bakingapp_java.fragments.RecipeListFragment;
+import com.harrric.chiebuka.bakingapp_java.models.Recipe;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -36,6 +42,8 @@ public class MainActivityBasicTest {
     }
 
 
+
+
     private RecipeListFragment startRecipeListFragment() {
         MainActivity activity = (MainActivity) mActivityTextRule.getActivity();
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
@@ -44,4 +52,6 @@ public class MainActivityBasicTest {
         transaction.commit();
         return recipeListFragment;
     }
+
+
 }
