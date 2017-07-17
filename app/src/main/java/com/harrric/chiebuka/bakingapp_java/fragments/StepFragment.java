@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class StepFragment extends Fragment {
 
         Bundle args = new Bundle();
         args.putSerializable("STEPS", stepsItem);
-
+        stepFragment.setArguments(args);
         return stepFragment;
     }
 
@@ -50,7 +51,9 @@ public class StepFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
             mStepsItem = (StepsItem) getArguments().getSerializable("STEPS");
+            Log.v("TAG_STEP", mStepsItem.getDescription());
         }
+
     }
 
     @Override
@@ -61,18 +64,21 @@ public class StepFragment extends Fragment {
 
         exoView = (SimpleExoPlayerView) view.findViewById(R.id.exo_player);
         simpleDescription = (TextView) view.findViewById(R.id.step_description);
+        if(mStepsItem != null){
+            simpleDescription.setText( mStepsItem.getDescription());
 
-        simpleDescription.setText( mStepsItem.getDescription());
-
-        if(mStepsItem.getVideoURL().isEmpty()){
-            exoView.setVisibility( View.GONE);
-        }else{
-            exoView.setVisibility( View.VISIBLE);
-            intializePlayer(mStepsItem.getVideoURL());
+            if(mStepsItem.getVideoURL().isEmpty()){
+                exoView.setVisibility( View.GONE);
+            }else{
+                exoView.setVisibility( View.VISIBLE);
+                intializePlayer(mStepsItem.getVideoURL());
+            }
         }
+
 
         return view;
     }
+
 
     private void intializePlayer(String mediaUrl) {
 

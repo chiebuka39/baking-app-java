@@ -61,6 +61,7 @@ public class StepsTab extends Fragment {
 
         StepsPagerAdapter stepsAdapter = new StepsPagerAdapter(recipe.getSteps(),
                 getActivity().getSupportFragmentManager());
+
         view_pager.setAdapter( stepsAdapter);
 
 

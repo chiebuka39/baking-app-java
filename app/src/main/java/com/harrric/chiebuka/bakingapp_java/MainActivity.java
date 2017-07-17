@@ -32,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, new RecipeListFragment())
                     .commit();
-        }else if(findViewById(R.id.multipane_container) != null){
-            Log.v("MULTIPANE", "multipane");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.recipe_list_container, new RecipeListFragment())
-                    .commit();
         }
 
 
@@ -62,11 +57,7 @@ public class MainActivity extends AppCompatActivity {
         if(findViewById(R.id.container) != null){
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, detailFragment)
-                    .commit();
-        }else if(findViewById(R.id.multipane_container) != null){
-            Log.v("MULTIPANE", "multipane2");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.recipe_detail_container, detailFragment)
+                    .addToBackStack(null)
                     .commit();
         }
     }

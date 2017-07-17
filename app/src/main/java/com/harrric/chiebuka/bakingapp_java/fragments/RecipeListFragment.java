@@ -2,10 +2,13 @@ package com.harrric.chiebuka.bakingapp_java.fragments;
 
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +80,7 @@ public class RecipeListFragment extends Fragment {
                         realm.commitTransaction();
                         recipeAdapter = new RecipeAdapter(getActivity(), recipes);
                         recyclerView.setAdapter(recipeAdapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        setLayout_Manager();
                         displayProgress(false);
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putBoolean(FIRST_LOAD, false);
@@ -95,7 +98,8 @@ public class RecipeListFragment extends Fragment {
             recipeAdapter = new RecipeAdapter(getActivity(), recipeArrayList);
 
             recyclerView.setAdapter(recipeAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            setLayout_Manager();
+            //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             displayProgress(false);
 
         }
@@ -107,10 +111,21 @@ public class RecipeListFragment extends Fragment {
         return view;
     }
 
+    private void setLayout_Manager() {
+        if (getActivity().getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        } else {
+
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        }
+    }
+
     private void  displayProgress(Boolean display){
         if(display){
             recyclerView.setVisibility( View.INVISIBLE);
-                progressBar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
         }else{
             recyclerView.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.INVISIBLE);

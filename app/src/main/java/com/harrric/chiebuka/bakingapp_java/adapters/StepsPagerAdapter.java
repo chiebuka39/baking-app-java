@@ -3,9 +3,10 @@ package com.harrric.chiebuka.bakingapp_java.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import com.harrric.chiebuka.bakingapp_java.fragments.StepFragment;
-import com.harrric.chiebuka.bakingapp_java.fragments.tabs.StepsTab;
+
 import com.harrric.chiebuka.bakingapp_java.models.StepsItem;
 
 import io.realm.RealmList;
@@ -24,7 +25,10 @@ public class StepsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return  new StepFragment();//StepsTab.newInstance(steps.get(i));
+        Log.v("TAG_", steps.get(i).getDescription());
+        //return  new BlankFragment();//StepFragment.newInstance(steps.get(i));
+        return  StepFragment.newInstance(steps.get(i));
+
     }
 
     @Override
