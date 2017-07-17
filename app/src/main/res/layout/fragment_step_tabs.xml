@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.example.chiebuka.thebakingapp.ui.tabs.StepTab">
+
+   <android.support.v4.view.ViewPager
+       android:id="@+id/steps_pager"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="6"/>
+    <android.support.constraint.ConstraintLayout
+        android:gravity="center_vertical"
+        android:background="#c7c7c1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/left_black_24dp"
+            />
+
+        <ImageView
+            android:id="@+id/right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/right_black_24dp"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
