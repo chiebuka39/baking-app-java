@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void onSelectedRecipeEvent(SelectedRecipeEvent recipeEvent){
         //val re = e.recipe.name?.let { RecipeDetailFragment.newInstance(it) }
-        RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance(recipeEvent.recipe);
+        RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance( recipeEvent.recipe.getName());
 
         if(findViewById(R.id.container) != null){
             getSupportFragmentManager().beginTransaction()

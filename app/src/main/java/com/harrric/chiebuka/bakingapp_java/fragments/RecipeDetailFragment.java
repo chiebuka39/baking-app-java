@@ -1,6 +1,8 @@
 package com.harrric.chiebuka.bakingapp_java.fragments;
 
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,6 +15,10 @@ import android.view.ViewGroup;
 import com.harrric.chiebuka.bakingapp_java.R;
 import com.harrric.chiebuka.bakingapp_java.adapters.RecipePagerAdapter;
 import com.harrric.chiebuka.bakingapp_java.models.Recipe;
+import com.harrric.chiebuka.bakingapp_java.widget.BakingWidget;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,11 +31,12 @@ public class RecipeDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static RecipeDetailFragment newInstance(Recipe recipe){
+    public static RecipeDetailFragment newInstance( String name){
         RecipeDetailFragment detailFragment = new RecipeDetailFragment();
 
         Bundle args = new Bundle();
-        args.putSerializable("RECIPE", recipe);
+        //args.putSerializable("RECIPE", recipe);
+        args.putString("RECIPE_NAME", name);
         detailFragment.setArguments(args);
 
         return detailFragment;
@@ -38,8 +45,14 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Realm realm = Realm.getDefaultInstance();
         if (getArguments() != null){
-            mRecipe =(Recipe) getArguments().getSerializable("RECIPE");
+            //mRecipe =(Recipe) getArguments().getSerializable("RECIPE");
+            String recipe_name =getArguments().getString("RECIPE_NAME");
+            RealmQuery<Recipe> realmQuery = realm.where(Recipe.class);
+
+            mRecipe = realmQuery.equalTo("name", recipe_name).findFirst();
+
         }
     }
 
@@ -89,5 +102,7 @@ public class RecipeDetailFragment extends Fragment {
 
             }
         });
+
+
     }
 }

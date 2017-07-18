@@ -15,6 +15,9 @@ import com.harrric.chiebuka.bakingapp_java.R;
 import com.harrric.chiebuka.bakingapp_java.adapters.IngredientsAgapter;
 import com.harrric.chiebuka.bakingapp_java.models.Recipe;
 
+import io.realm.Realm;
+import io.realm.RealmQuery;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link IngredientsTab#newInstance} factory method to
@@ -32,10 +35,10 @@ public class IngredientsTab extends Fragment {
     }
 
 
-    public static IngredientsTab newInstance(Recipe recipe) {
+    public static IngredientsTab newInstance(String name) {
         IngredientsTab fragment = new IngredientsTab();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, recipe);
+        args.putString(ARG_PARAM1, name);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,7 +47,11 @@ public class IngredientsTab extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            recipe = (Recipe) getArguments().getSerializable(ARG_PARAM1);
+            String recipe_name =getArguments().getString(ARG_PARAM1);
+            RealmQuery<Recipe> realmQuery = Realm.getDefaultInstance().where(Recipe.class);
+
+            recipe = realmQuery.equalTo("name", recipe_name).findFirst();
+
         }
     }
 

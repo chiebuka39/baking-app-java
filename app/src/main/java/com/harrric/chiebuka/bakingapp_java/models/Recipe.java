@@ -7,9 +7,10 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 @Generated("com.robohorse.robopojogenerator")
-public class Recipe extends RealmObject implements Serializable{
+public class Recipe extends RealmObject{
 
 	@SerializedName("image")
 	private String image;
@@ -18,6 +19,7 @@ public class Recipe extends RealmObject implements Serializable{
 	private int servings;
 
 	@SerializedName("name")
+	@PrimaryKey
 	private String name;
 
 	@SerializedName("ingredients")

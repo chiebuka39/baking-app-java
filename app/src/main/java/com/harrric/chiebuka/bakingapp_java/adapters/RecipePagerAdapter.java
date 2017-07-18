@@ -26,9 +26,9 @@ public class RecipePagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int i) {
         if(i == 0){
-            return IngredientsTab.newInstance(mRecipe);
+            return IngredientsTab.newInstance(mRecipe.getName());
         }else {
-            return StepsTab.newInstance(mRecipe);
+            return StepsTab.newInstance(mRecipe.getName());
         }
     }
 

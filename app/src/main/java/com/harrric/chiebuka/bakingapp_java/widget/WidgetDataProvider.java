@@ -27,18 +27,24 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     int position = -1;
     int limit = 3;
 
+
+
     public WidgetDataProvider(Context context){
         mContext = context;
     }
 
     @Override
     public void onCreate() {
+
         Realm realm = Realm.getDefaultInstance();
         RealmQuery<Recipe> realmQuery = realm.where(Recipe.class);
         RealmResults<Recipe> recipes = realmQuery.findAll();
-        recipeList= new ArrayList<>();
-        recipeList.addAll(recipes.subList(0, recipes.size()));
-        Log.v("Harry", recipeList.get(2).getName());
+
+        recipeList= getDetachedRealmList(realm,recipes);
+        //recipeList.addAll(recipes.subList(0, recipes.size()));
+        //Log.v("Harry", recipeList.get(2).getName());
+        //recipe = realm.copyFromRealm(recipeList.get(0));
+
 
     }
 
@@ -47,7 +53,7 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
         position++;
         Log.v("Harry", ""+position);
         recipe = recipeList.get(position);
-
+        //Log.v("Harry", ""+recipe.);
         if(position == limit) {
             position = -1;
         }
@@ -60,8 +66,8 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getCount() {
-        Log.v("Harry_", ""+recipe.getIngredients().size());
-        return recipe.getIngredients().size();
+        //Log.v("Harry_", ""+recipe.getIngredients().size());
+        return recipe.getIngredients().size();//recipeList.get(0).getIngredients().size();
     }
 
     @Override
@@ -105,5 +111,13 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     @Override
     public boolean hasStableIds() {
         return true;
+    }
+
+    public ArrayList<Recipe> getDetachedRealmList(Realm realm,RealmResults<Recipe> recipes){
+        ArrayList<Recipe> myRecipe = new ArrayList<>();
+        for (int i = 0; i < recipes.size(); i++){
+            myRecipe.add(realm.copyFromRealm(recipes.get(i)));
+        }
+        return  myRecipe;
     }
 }

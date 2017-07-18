@@ -21,7 +21,11 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.harrric.chiebuka.bakingapp_java.R;
+import com.harrric.chiebuka.bakingapp_java.models.Recipe;
 import com.harrric.chiebuka.bakingapp_java.models.StepsItem;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,11 +37,11 @@ public class StepFragment extends Fragment {
     private SimpleExoPlayer simpleExoPlayer;
     private TextView simpleDescription;
 
-    public static StepFragment newInstance(StepsItem stepsItem){
+    public static StepFragment newInstance(int stepsId){
         StepFragment stepFragment = new StepFragment();
 
         Bundle args = new Bundle();
-        args.putSerializable("STEPS", stepsItem);
+        args.putInt("STEPS", stepsId);
         stepFragment.setArguments(args);
         return stepFragment;
     }
@@ -50,8 +54,10 @@ public class StepFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
-            mStepsItem = (StepsItem) getArguments().getSerializable("STEPS");
-            Log.v("TAG_STEP", mStepsItem.getDescription());
+            int recipe_id =getArguments().getInt("STEPS");
+            RealmQuery<StepsItem> realmQuery = Realm.getDefaultInstance().where(StepsItem.class);
+
+            mStepsItem = realmQuery.equalTo("id", recipe_id).findFirst();
         }
 
     }

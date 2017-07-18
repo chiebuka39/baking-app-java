@@ -17,6 +17,9 @@ import com.harrric.chiebuka.bakingapp_java.adapters.StepsPagerAdapter;
 import com.harrric.chiebuka.bakingapp_java.models.Recipe;
 import com.harrric.chiebuka.bakingapp_java.models.StepsItem;
 
+import io.realm.Realm;
+import io.realm.RealmQuery;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -32,10 +35,10 @@ public class StepsTab extends Fragment {
         // Required empty public constructor
     }
 
-    public static StepsTab newInstance(Recipe recipe){
+    public static StepsTab newInstance(String name){
         StepsTab stepsTab = new StepsTab();
         Bundle args = new Bundle();
-        args.putSerializable("STEPS", recipe);
+        args.putString("STEPS", name);
         stepsTab.setArguments(args);
 
         return stepsTab;
@@ -50,7 +53,10 @@ public class StepsTab extends Fragment {
         view_pager = (ViewPager)  view.findViewById(R.id.steps_pager);
         prev =(ImageView) view.findViewById(R.id.left);
         next = (ImageView) view.findViewById(R.id.right);
-        recipe =(Recipe) getArguments().getSerializable("STEPS");
+        String recipe_name =getArguments().getString("STEPS");
+        RealmQuery<Recipe> realmQuery = Realm.getDefaultInstance().where(Recipe.class);
+
+        recipe = realmQuery.equalTo("name", recipe_name).findFirst();
 
         return view;
     }

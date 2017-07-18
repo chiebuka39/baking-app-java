@@ -27,7 +27,7 @@ public class StepsPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         Log.v("TAG_", steps.get(i).getDescription());
         //return  new BlankFragment();//StepFragment.newInstance(steps.get(i));
-        return  StepFragment.newInstance(steps.get(i));
+        return  StepFragment.newInstance(steps.get(i).getId());
 
     }
 
