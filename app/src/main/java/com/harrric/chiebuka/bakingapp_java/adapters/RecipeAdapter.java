@@ -60,12 +60,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             recipeName = (TextView) itemView.findViewById(R.id.recipeName);
         }
 
-        public void bind(Recipe recipe){
+        public void bind(final Recipe recipe){
             recipeName.setText(recipe.getName());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    EventBus.getDefault().post(new SelectedRecipeEvent(recipe));
                 }
             });
         }
