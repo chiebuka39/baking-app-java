@@ -62,9 +62,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         public void bind(Recipe recipe){
             recipeName.setText(recipe.getName());
-            itemView.setOnClickListener(v -> {
-                //Toast.makeText(mContext, "bjnmbm", Toast.LENGTH_SHORT).show();
-                EventBus.getDefault().post(new SelectedRecipeEvent(recipe));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                }
             });
         }
     }

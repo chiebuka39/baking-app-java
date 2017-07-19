@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -61,7 +62,7 @@ public class RecipeListFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recipe_recycler);
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
         recipeRepository = new RemoteRecipeRepository(RecipeApiService.creator.create());
-        Realm realm = Realm.getDefaultInstance();
+        final Realm realm = Realm.getDefaultInstance();
 
         prefs = getActivity().getSharedPreferences(PREFS_FILENAME, 0);
         boolean firstLoad = prefs.getBoolean(FIRST_LOAD, true);
@@ -69,22 +70,29 @@ public class RecipeListFragment extends Fragment {
         if(firstLoad){
             compositeDisposable.add( recipeRepository.getRecipes()
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnNext(recipes -> displayProgress(true))
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(recipes -> {
-
-                        realm.beginTransaction();
-                        for (Recipe recipe: recipes){
-                            Recipe recip = realm.copyToRealm(recipe);
+                    .doOnNext(new Consumer<ArrayList<Recipe>>() {
+                        @Override
+                        public void accept(ArrayList<Recipe> recipes) throws Exception {
+                            displayProgress(true);
                         }
-                        realm.commitTransaction();
-                        recipeAdapter = new RecipeAdapter(getActivity(), recipes);
-                        recyclerView.setAdapter(recipeAdapter);
-                        setLayout_Manager();
-                        displayProgress(false);
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putBoolean(FIRST_LOAD, false);
-                        editor.apply();
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Consumer<ArrayList<Recipe>>() {
+                        @Override
+                        public void accept(ArrayList<Recipe> recipes) throws Exception {
+                            realm.beginTransaction();
+                            for (Recipe recipe: recipes){
+                                Recipe recip = realm.copyToRealm(recipe);
+                            }
+                            realm.commitTransaction();
+                            recipeAdapter = new RecipeAdapter(getActivity(), recipes);
+                            recyclerView.setAdapter(recipeAdapter);
+                            setLayout_Manager();
+                            displayProgress(false);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean(FIRST_LOAD, false);
+                            editor.apply();
+                        }
                     })
             );
         }else {

@@ -100,16 +100,22 @@ public class StepsTab extends Fragment {
             }
         });
 
-        prev.setOnClickListener(v -> {
-            Toast.makeText(getActivity(),"Prev",Toast.LENGTH_SHORT).show();
-            position--;
-            view_pager.setCurrentItem(position);
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Prev", Toast.LENGTH_SHORT).show();
+                position--;
+                view_pager.setCurrentItem(position);
+            }
         });
 
-        next.setOnClickListener(v -> {
-            Toast.makeText(getActivity(),"Next",Toast.LENGTH_SHORT).show();
-                    ++position;
-            view_pager.setCurrentItem(position) ;
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Next", Toast.LENGTH_SHORT).show();
+                ++position;
+                view_pager.setCurrentItem(position);
+            }
         });
         if (position != -1) view_pager.setCurrentItem(position);
     }
