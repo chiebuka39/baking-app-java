@@ -64,15 +64,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe
     public void onSelectedRecipeEvent(SelectedRecipeEvent recipeEvent){
-        //val re = e.recipe.name?.let { RecipeDetailFragment.newInstance(it) }
         RecipeDetailFragment detailFragment = RecipeDetailFragment.newInstance( recipeEvent.recipe.getName());
 
-        if(findViewById(R.id.container) != null){
+        if(findViewById(R.id.detail_container) != null){
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.detail_container, detailFragment)
+                        .commit();
+        }else{
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, detailFragment)
                     .addToBackStack(null)
                     .commit();
         }
+
+
     }
 
     @Override

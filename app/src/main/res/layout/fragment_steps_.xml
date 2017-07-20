@@ -8,7 +8,14 @@
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/exo_player"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="250dp"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/thumbnail_image"
+        android:scaleType="centerCrop"/>
 
     <ScrollView
         android:layout_width="match_parent"

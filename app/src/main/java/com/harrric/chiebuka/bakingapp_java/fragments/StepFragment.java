@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -36,6 +38,7 @@ public class StepFragment extends Fragment {
     private SimpleExoPlayerView exoView;
     private SimpleExoPlayer simpleExoPlayer;
     private TextView simpleDescription;
+    private ImageView thumbnail;
 
     public static StepFragment newInstance(int stepsId){
         StepFragment stepFragment = new StepFragment();
@@ -70,6 +73,9 @@ public class StepFragment extends Fragment {
 
         exoView = (SimpleExoPlayerView) view.findViewById(R.id.exo_player);
         simpleDescription = (TextView) view.findViewById(R.id.step_description);
+        thumbnail = (ImageView) view.findViewById(R.id.thumbnail_image);
+
+
         if(mStepsItem != null){
             simpleDescription.setText( mStepsItem.getDescription());
 
@@ -79,7 +85,15 @@ public class StepFragment extends Fragment {
                 exoView.setVisibility( View.VISIBLE);
                 intializePlayer(mStepsItem.getVideoURL());
             }
+
+            if(mStepsItem.getThumbnailURL() != null){
+                thumbnail.setVisibility(View.VISIBLE);
+                Glide.with(this).load(mStepsItem.getThumbnailURL()).into(thumbnail);
+            }
+
         }
+
+
 
 
         return view;

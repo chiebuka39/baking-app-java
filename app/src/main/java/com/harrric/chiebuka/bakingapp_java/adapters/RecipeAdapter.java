@@ -61,6 +61,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         }
 
         public void bind(final Recipe recipe){
+            itemView.setTag((long) recipe.getId());
             recipeName.setText(recipe.getName());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
