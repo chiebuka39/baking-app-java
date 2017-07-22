@@ -28,6 +28,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -97,12 +98,42 @@ public class MainActivityBasicTest {
                 allOf(withId(R.id.recipe_recycler), isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        onView(allOf(
-                withId(R.id.recipeName),
-                isDescendantOfA(withTagValue(is((Object)1L))))
-        ).check(matches(withText("Nutella Pie")));
+
 
     }
+
+    @Test
+    public void mainActivityTest2() {
+
+        mActivityTextRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                RecipeListFragment recipeListFragment = startRecipeListFragment();
+            }
+        });
+
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recipe_recycler), isDisplayed()));
+        recyclerView.perform(actionOnItemAtPosition(1, click()));
+
+        ViewInteraction appCompatTextView = onView(
+                allOf(withText("Steps"), isDisplayed()));
+        appCompatTextView.perform(click());
+
+        ViewInteraction appCompatImageView = onView(
+                allOf(withId(R.id.right), isDisplayed()));
+        appCompatImageView.perform(click());
+
+        ViewInteraction appCompatImageView2 = onView(
+                allOf(withId(R.id.right), isDisplayed()));
+        appCompatImageView2.perform(click());
+
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.exo_play), withContentDescription("Play"), isDisplayed()));
+        appCompatImageButton.perform(click());
+
+    }
+
 
 
 
