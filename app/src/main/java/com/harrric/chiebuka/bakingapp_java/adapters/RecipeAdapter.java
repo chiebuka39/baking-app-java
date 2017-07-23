@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.harrric.chiebuka.bakingapp_java.R;
 import com.harrric.chiebuka.bakingapp_java.events.SelectedRecipeEvent;
 import com.harrric.chiebuka.bakingapp_java.models.Recipe;
@@ -54,10 +56,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     public class RecipeViewHolder extends RecyclerView.ViewHolder {
         TextView recipeName;
+        ImageView recipeImage;
 
         public RecipeViewHolder(View itemView) {
             super(itemView);
             recipeName = (TextView) itemView.findViewById(R.id.recipeName);
+            recipeImage = (ImageView) itemView.findViewById(R.id.recipe_image);
         }
 
         public void bind(final Recipe recipe){
@@ -69,6 +73,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                     EventBus.getDefault().post(new SelectedRecipeEvent(recipe));
                 }
             });
+
+            if(recipe.getImage() != null){
+                Glide.with(itemView.getContext())
+                        .load(recipe.getImage())
+                        .into(recipeImage);
+            }
         }
     }
 }

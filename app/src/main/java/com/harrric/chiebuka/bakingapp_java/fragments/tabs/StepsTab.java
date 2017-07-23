@@ -14,8 +14,11 @@ import android.widget.Toast;
 
 import com.harrric.chiebuka.bakingapp_java.R;
 import com.harrric.chiebuka.bakingapp_java.adapters.StepsPagerAdapter;
+import com.harrric.chiebuka.bakingapp_java.events.ClickedNextOrPrev;
 import com.harrric.chiebuka.bakingapp_java.models.Recipe;
 import com.harrric.chiebuka.bakingapp_java.models.StepsItem;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -87,6 +90,7 @@ public class StepsTab extends Fragment {
 
                     if (position == recipe.getSteps().size() - 1) {
                         next.setEnabled(false);
+
                     } else {
                         next.setEnabled(true);
                     }
@@ -106,6 +110,7 @@ public class StepsTab extends Fragment {
                 Toast.makeText(getActivity(), "Prev", Toast.LENGTH_SHORT).show();
                 position--;
                 view_pager.setCurrentItem(position);
+                EventBus.getDefault().post(new ClickedNextOrPrev());
             }
         });
 
@@ -115,6 +120,7 @@ public class StepsTab extends Fragment {
                 Toast.makeText(getActivity(), "Next", Toast.LENGTH_SHORT).show();
                 ++position;
                 view_pager.setCurrentItem(position);
+                EventBus.getDefault().post(new ClickedNextOrPrev());
             }
         });
         if (position != -1) view_pager.setCurrentItem(position);
